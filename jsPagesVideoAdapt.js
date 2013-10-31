@@ -1,33 +1,64 @@
 /*
 
 	Edit 2
+	
+	Dependences
+	
+	- jsPagesUtility
 
 */
 (function($) {
 
-	$.fn.jsPagesVideoAdapt = function( parent , top , left ){
+	var options = {
+		parent : [],
+		top : 'center',
+		left : 'center',
+		timeoutPosition : 0
+	};
 	
-		var w = this.width();
-		var h = this.height();
-		
-		if( w > h ){
-			w = w/h;
-			h = 1;
-		}
-		else{
-			h = h/w;
-			w=1;
-		}
-		
-		var _this = this;
+	var parent;
+
+	$.fn.jsPagesVideoAdapt = function( parameters ){
 	
-		$(window).resize(function(){
+		$.extend( parameters , options );
 		
-			_this.jsPagesVideoAdaptSet(parent , w , h , top , left );
+		var i = 0;
+		
+		return this.each(function() {
+		
+			e = $(this);
+		
+			if( options.parent[i] )
+				parent = $( options.parent[i] );
+			else
+				parent = e.jsPagesGetParentOfSize();
+
+	
+			var w = e.width();
+			var h = e.height();
+		
+			if( w > h ){
+				w = w/h;
+				h = 1;
+			}
+			else{
+				h = h/w;
+				w=1;
+			}
+		
+			var _this = e;
+	
+			$(window).resize(function(){
+		
+				_this.jsPagesVideoAdaptSet( parent.get(0) , w , h , options.top , options.left );
+			
+			});
+			
+			e.jsPagesVideoAdaptSet(parent.get(0) , w , h , options.top , options.left );
+		
+			++i;
 		
 		});
-		
-		this.jsPagesVideoAdaptSet(parent , w , h , top , left );
 	
 	};
 	
