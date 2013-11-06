@@ -20,17 +20,22 @@
 	}
 
 	// handles the ajax request
+	// prototype only
 
 	$.fn.jsPagesLoad = function( arr ) {
 
 		var request = $.get( arr[2] )
 		.done(function( data ) {
+
 			$( arr[1] ).html( data );
 			alert( 'Success' );
+
 		})
 		.fail(function() {
+
 			$( arr[1] ).html( $.jsPagesFailure );
 			alert( 'Error' );
+
 		});
 
 	}
@@ -39,18 +44,7 @@
 
 	$.fn.jsPagesUrl = function( arr ) {
 
-
-
-	}
-
-	$.fn.jsPagesAnim = function( arr ) {
-
-		if( $.jsPagesArr[2] == 'slide' )
-			// slide function
-		else if( $.jsPagesArr[2] == 'fade' )
-			// fade function
-		else if( $.jsPagesArr[2] == 'none' )
-			// basic function
+		// to complete
 
 	}
 
