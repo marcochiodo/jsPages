@@ -4,47 +4,59 @@
 
 	$.fn.jsPagesGetExitLink = function( e ) {
 
-		var href = $( this ).attr( 'href' );
+		for( var key in $.jsPagesList.pages ) {
 
-		for( var n = 0; n < $.jsPagesArr[1].lenght; ++n ) {
-
-			if( href == $.jsPagesArr[1][n][0] ) ) {
+			if( $( this ).attr( 'href' ) == $.jsPagesList[key].link ) ) {
 
 				e.preventDefault();
-				$.jsPagesLoad( $.jsPagesArr[1][n] );
-				$.jsPagesUrl( $.jsPagesArr[1][n] );
-				$.jsPagesAnim( $.jsPagesArr[1][n] );
+				$.jsPagesLoad( $.jsPagesList[key] );
+				$.jsPagesUrl( $.jsPagesList[key] );
 				break;
 			}
 		}
 	}
 
 	// handles the ajax request
-	// prototype only
 
-	$.fn.jsPagesLoad = function( arr ) {
+	$.fn.jsPagesLoad = function( page ) {
 
-		var request = $.get( arr[2] )
-		.done(function( data ) {
+		$.event.trigger( {
+			type : 'jsPagesStart',
+			data : data
+		} );
 
-			$( arr[1] ).html( data );
-			alert( 'Success' );
-
-		})
-		.fail(function() {
-
-			$( arr[1] ).html( $.jsPagesFailure );
-			alert( 'Error' );
-
-		});
-
+		$.ajax( {
+			url : page.ajaxLink
+		} )
+		
+		.done( function( data ) {
+			$.event.trigger( {
+				type : 'jsPagesDone',
+				data : data
+			} );
+		} )
+		
+		.fail( function( data ) {
+			$.event.trigger( {
+				type : 'jsPagesFail',
+				time : new Date(),
+				page : page
+			} );
+		} )
+		
+		.always( function( data ) {
+			$.event.trigger( {
+				type : 'jsPagesAlways',
+				data : data
+			} );
+		} )
 	}
 
 	// sets the page url
 
-	$.fn.jsPagesUrl = function( arr ) {
+	$.fn.jsPagesUrl = function( page ) {
 
-		// to complete
+		history.pushState( null, null, page.link );
 
 	}
 
