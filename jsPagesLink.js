@@ -4,60 +4,29 @@
 
 	$.fn.jsPagesGetExitLink = function( e ) {
 
-		for( var key in $.jsPagesList.pages ) {
+		for( var k in $.jsPagesList ) {
 
-			if( $( this ).attr( 'href' ) == $.jsPagesList[key].link ) ) {
+			if( $( this ).attr( 'href' ) == k.href ) {
 
 				e.preventDefault();
-				$.jsPagesLoad( $.jsPagesList[key] );
-				$.jsPagesUrl( $.jsPagesList[key] );
-				break;
+				$.event.trigger({
+					type : 'jsPagesLoad',
+					id : page.id,
+					link : page.link,
+					n : page.n
+				});
 			}
 		}
 	}
 
-	// handles the ajax request
-
-	$.fn.jsPagesLoad = function( page ) {
-
-		$.event.trigger( {
-			type : 'jsPagesStart',
-			data : data
-		} );
-
-		$.ajax( {
-			url : page.ajaxLink
-		} )
-		
-		.done( function( data ) {
-			$.event.trigger( {
-				type : 'jsPagesDone',
-				data : data
-			} );
-		} )
-		
-		.fail( function( data ) {
-			$.event.trigger( {
-				type : 'jsPagesFail',
-				time : new Date(),
-				page : page
-			} );
-		} )
-		
-		.always( function( data ) {
-			$.event.trigger( {
-				type : 'jsPagesAlways',
-				data : data
-			} );
-		} )
-	}
-
 	// sets the page url
 
-	$.fn.jsPagesUrl = function( page ) {
+	$.fn.jsPagesUrl = function( e ) {
 
-		history.pushState( null, null, page.link );
+		if( ! history.pushState( null, null, e.link ) ) {
 
+			window.location = e.link;
+		}
 	}
 
 })(jQuery);
