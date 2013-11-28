@@ -40,4 +40,17 @@
 	
 	}
 
+	$.fn.jsPagesCurrent = function() {
+		 var href = $(location).attr('href');
+
+		 for( var k in $.jsPagesList ) {
+
+			if( href == k.href ) ) {
+
+				$.jsPagesCurrent.n = k.n;
+				$.jsPagesCurrent.id = k.id;
+			}
+		}
+	}
+
 })(jQuery);
