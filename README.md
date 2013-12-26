@@ -1,7 +1,7 @@
 jsPages
 =======
 
-Version 0.2
+Version 0.3
 
 A lightweight jQuery plugin to simplify websites developement
 
