@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+		<style>
+			*{ width:100%;height:100%;margin:0px;padding:0px }
+		</style>
+	</head>
+	<body>
+		<div style="height:80px;">
+			<a style="width:200px;" href="/a">GO TO A</a>
+			<a style="width:200px;" href="/b">GO TO B</a>
+			<a style="width:200px;" href="/c">GO TO C</a>
+		</div>
+		<div id="x" style="height:calc(100% - 80px)">
+			<div id="a" style="background-color:#f00;display:block"></div>
+			<div id="b" style="background-color:#0f0;display:none"></div>
+			<div id="c" style="background-color:#00f;display:none"></div>
+		</div>
+	</body>
+	<script src="jsPages.js"></script>
+	<script>
+		$.jsPagesInit( [
+			{ l : '/a', id : '#a' },
+			{ l : '/b', id : '#b' },
+			{ l : '/c', id : '#c' }
+		], '#x' );
+
+		$( document ).on( 'jsPagesLoad', function( evt ) {
+			$.jsPagesPushHistory( event );
+			$.jsPagesAnimFade( evt );
+			} );
+	</script>
+</html>
